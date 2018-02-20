@@ -78,7 +78,7 @@ function createObjectFromJSON(url) {
 function fillFields(obj) {
   //Filling out Day 1
   document.querySelector("#day1 .date").innerHTML = formatDate(obj.list[0].dt);
-  document.querySelector("#day1 .w-icon").setAttribute("src", 'http://openweathermap.org/img/w/' + obj.list[0].weather[0].icon + '.png');
+  document.querySelector("#day1 .w-icon").setAttribute("src", 'https://openweathermap.org/img/w/' + obj.list[0].weather[0].icon + '.png');
   document.querySelector("#day1 .clouds").innerHTML = obj.list[0].weather[0].main;
   document.querySelector("#day1 .temperature").innerHTML = obj.list[0].main.temp.toFixed(0) + '&deg;C';
   document.querySelector("#day1 .pressure").innerHTML = obj.list[0].main.pressure.toFixed(0) + ' hPa';
@@ -87,7 +87,7 @@ function fillFields(obj) {
 
   //Filling out day 2
   document.querySelector("#day2 .date").innerHTML = formatDate(obj.list[8].dt);
-  document.querySelector("#day2 .w-icon").setAttribute("src", 'http://openweathermap.org/img/w/' + obj.list[8].weather[0].icon + '.png');
+  document.querySelector("#day2 .w-icon").setAttribute("src", 'https://openweathermap.org/img/w/' + obj.list[8].weather[0].icon + '.png');
   document.querySelector("#day2 .clouds").innerHTML = obj.list[8].weather[0].main;
   document.querySelector("#day2 .temperature").innerHTML = obj.list[8].main.temp.toFixed(0) + '&deg;C';
   document.querySelector("#day2 .pressure").innerHTML = obj.list[8].main.pressure.toFixed(0) + ' hPa';
@@ -96,7 +96,7 @@ function fillFields(obj) {
 
   //Filling out day 3
   document.querySelector("#day3 .date").innerHTML = formatDate(obj.list[16].dt);
-  document.querySelector("#day3 .w-icon").setAttribute("src", 'http://openweathermap.org/img/w/' + obj.list[16].weather[0].icon + '.png');
+  document.querySelector("#day3 .w-icon").setAttribute("src", 'https://openweathermap.org/img/w/' + obj.list[16].weather[0].icon + '.png');
   document.querySelector("#day3 .clouds").innerHTML = obj.list[16].weather[0].main;
   document.querySelector("#day3 .temperature").innerHTML = obj.list[16].main.temp.toFixed(0) + '&deg;C';
   document.querySelector("#day3 .pressure").innerHTML = obj.list[16].main.pressure.toFixed(0) + ' hPa';
@@ -105,7 +105,7 @@ function fillFields(obj) {
 
   //Filling out day 4
   document.querySelector("#day4 .date").innerHTML = formatDate(obj.list[24].dt);
-  document.querySelector("#day4 .w-icon").setAttribute("src", 'http://openweathermap.org/img/w/' + obj.list[24].weather[0].icon + '.png');
+  document.querySelector("#day4 .w-icon").setAttribute("src", 'https://openweathermap.org/img/w/' + obj.list[24].weather[0].icon + '.png');
   document.querySelector("#day4 .clouds").innerHTML = obj.list[24].weather[0].main;
   document.querySelector("#day4 .temperature").innerHTML = obj.list[24].main.temp.toFixed(0) + '&deg;C';
   document.querySelector("#day4 .pressure").innerHTML = obj.list[24].main.pressure.toFixed(0) + ' hPa';
@@ -114,7 +114,7 @@ function fillFields(obj) {
 
   //Filling out day 5
   document.querySelector("#day5 .date").innerHTML = formatDate(obj.list[32].dt);
-  document.querySelector("#day5 .w-icon").setAttribute("src", 'http://openweathermap.org/img/w/' + obj.list[32].weather[0].icon + '.png');
+  document.querySelector("#day5 .w-icon").setAttribute("src", 'https://openweathermap.org/img/w/' + obj.list[32].weather[0].icon + '.png');
   document.querySelector("#day5 .clouds").innerHTML = obj.list[32].weather[0].main;
   document.querySelector("#day5 .temperature").innerHTML = obj.list[32].main.temp.toFixed(0) + '&deg;C';
   document.querySelector("#day5 .pressure").innerHTML = obj.list[32].main.pressure.toFixed(0) + ' hPa';
@@ -137,7 +137,7 @@ function fillingTable(obj) {
 
   //weather every 3 hours
   for (var _i = 0; _i < 8; _i++) {
-    myTable.rows[1].cells[_i + 1].innerHTML = '<img src="http://openweathermap.org/img/w/' + obj.list[_i].weather[0].icon + '.png" alt="type"><br><span>' + obj.list[_i].weather[0].main + '</span>';
+    myTable.rows[1].cells[_i + 1].innerHTML = '<img src="https://openweathermap.org/img/w/' + obj.list[_i].weather[0].icon + '.png" alt="type"><br><span>' + obj.list[_i].weather[0].main + '</span>';
   }
 
   //Temperature every 3 hours
@@ -167,7 +167,7 @@ var submitButton = document.getElementById("submitWeather");
 submitButton.onclick = function () {
   var cityName = document.getElementById("cityname").value;
   var APPID = "24b392a2ec286e7af099fee1f324b904";
-  var createURL = 'http://api.openweathermap.org/data/2.5/forecast?q=' + cityName + '&units=metric&APPID=' + APPID;
+  var createURL = 'https://api.openweathermap.org/data/2.5/forecast?q=' + cityName + '&units=metric&APPID=' + APPID;
   //involve AJAX function
   createObjectFromJSON(createURL);
 };
