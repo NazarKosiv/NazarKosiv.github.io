@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <link rel="stylesheet" href="libs/bootstrap-4.0.0-dist/css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/main.css">
+	<link rel="stylesheet" href="libs/font-awesome/css/fontawesome-all.min.css">
+	<title>WeatherMe</title>
+</head>
+<body>
+
+	<div id="wrapper" class="container-fluid d-flex flex-column">
+		<header id="header" class="row justify-content-between align-items-center">
+            <div class="col-6 d-flex justify-content-start">
+                <div class="logo">
+                    <a href="#" class="logo">WeatherMe</a>
+                </div>
+            </div>
+            <div class="col-6 d-flex justify-content-end">
+                <div class="searchingplace">
+                    <form id="searchform">
+                        <input id="cityname" type="text" placeholder="Your city..." name="cityname">
+                        <input type="button" id="submitWeather" value="SEND">
+                    </form>
+                </div>
+            </div>
+        </header>
+
+		<main id="main" class="row flex-grow justify-content-center align-items-center">
+			<div id="content" class="container">
+                <button type="button" class="todaysbtn">Today</button>
+                <button type="button" class="fivedaysbtn">5 days</button>
+                <h1 class="city-country"></h1>
+				<div id="fivedays" class="row justify-content-sm-center justify-content-lg-between" hidden>
+					<div id="day1" class="col-lg-6 col-xl-2">
+                        <div class="days">
+                            <div class="days-wrapper">
+                                <h5 class="date"></h5>
+                            </div>
+                            <div class="clouds-wrapper">
+                                <h5>Weather</h5>
+                                <img src="http://openweathermap.org/img/w/10d.png" alt="type of weather" class="w-icon">
+                                <div class="clouds"></div>
+                            </div>
+                            <div class="temperatures-wrapper">
+                                <h5>Temperature</h5>
+                                <div class="temperature"></div>
+                            </div>
+                            <div class="pressures-wrapper">
+                                <h5>Pressure</h5>
+                                <div class="pressure"></div>
+                            </div>
+                            <div class="humiditys-wrapper">
+                                <h5>Humidity</h5>
+                                <div class="humidity"></div>
+                            </div>
+                            <div class="winds-wrapper">
+                                <h5>Wind speed</h5>
+                                <div class="wind"></div>
+                            </div>
+                            <button type="button" class="days_advanced">expanded</button>
+                        </div>
+                    </div>
+					<div id="day2" class="col-lg-6 col-xl-2">
+                        <div class="days">
+                            <div class="days-wrapper">
+                                <h5 class="date"></h5>
+                            </div>
+                            <div class="clouds-wrapper">
+                                <h5>Weather</h5>
+                                <img src="http://openweathermap.org/img/w/10d.png" alt="type of weather" class="w-icon">
+                                <div class="clouds"></div>
+                            </div>
+                            <div class="temperatures-wrapper">
+                                <h5>Temperature</h5>
+                                <div class="temperature"></div>
+                            </div>
+                            <div class="pressures-wrapper">
+                                <h5>Pressure</h5>
+                                <div class="pressure"></div>
+                            </div>
+                            <div class="humiditys-wrapper">
+                                <h5>Humidity</h5>
+                                <div class="humidity"></div>
+                            </div>
+                            <div class="winds-wrapper">
+                                <h5>Wind speed</h5>
+                                <div class="wind"></div>
+                            </div>
+                            <button type="button" class="days_advanced">expanded</button>
+                        </div>
+                    </div>
+					<div id="day3" class="col-lg-6 col-xl-2">
+                        <div class="days">
+                            <div class="days-wrapper">
+                                <h5 class="date"></h5>
+                            </div>
+                            <div class="clouds-wrapper">
+                                <h5>Weather</h5>
+                                <img src="http://openweathermap.org/img/w/10d.png" alt="type of weather" class="w-icon">
+                                <div class="clouds"></div>
+                            </div>
+                            <div class="temperatures-wrapper">
+                                <h5>Temperature</h5>
+                                <div class="temperature"></div>
+                            </div>
+                            <div class="pressures-wrapper">
+                                <h5>Pressure</h5>
+                                <div class="pressure"></div>
+                            </div>
+                            <div class="humiditys-wrapper">
+                                <h5>Humidity</h5>
+                                <div class="humidity"></div>
+                            </div>
+                            <div class="winds-wrapper">
+                                <h5>Wind speed</h5>
+                                <div class="wind"></div>
+                            </div>
+                            <button type="button" class="days_advanced">expanded</button>
+                        </div>
+                    </div>
+					<div id="day4" class="col-lg-6 col-xl-2">
+                        <div class="days">
+                            <div class="days-wrapper">
+                                <h5 class="date"></h5>
+                            </div>
+                            <div class="clouds-wrapper">
+                                <h5>Weather</h5>
+                                <img src="http://openweathermap.org/img/w/10d.png" alt="type of weather" class="w-icon">
+                                <div class="clouds"></div>
+                            </div>
+                            <div class="temperatures-wrapper">
+                                <h5>Temperature</h5>
+                                <div class="temperature"></div>
+                            </div>
+                            <div class="pressures-wrapper">
+                                <h5>Pressure</h5>
+                                <div class="pressure"></div>
+                            </div>
+                            <div class="humiditys-wrapper">
+                                <h5>Humidity</h5>
+                                <div class="humidity"></div>
+                            </div>
+                            <div class="winds-wrapper">
+                                <h5>Wind speed</h5>
+                                <div class="wind"></div>
+                            </div>
+                            <button type="button" class="days_advanced">expanded</button>
+                        </div>
+                    </div>
+					<div id="day5" class="col-lg col-xl-2">
+                        <div class="days">
+                            <div class="days-wrapper">
+                                <h5 class="date"></h5>
+                            </div>
+                            <div class="clouds-wrapper">
+                                <h5>Weather</h5>
+                                <img src="http://openweathermap.org/img/w/10d.png" alt="type of weather" class="w-icon">
+                                <div class="clouds"></div>
+                            </div>
+                            <div class="temperatures-wrapper">
+                                <h5>Temperature</h5>
+                                <div class="temperature"></div>
+                            </div>
+                            <div class="pressures-wrapper">
+                                <h5>Pressure</h5>
+                                <div class="pressure"></div>
+                            </div>
+                            <div class="humiditys-wrapper">
+                                <h5>Humidity</h5>
+                                <div class="humidity"></div>
+                            </div>
+                            <div class="winds-wrapper">
+                                <h5>Wind speed</h5>
+                                <div class="wind"></div>
+                            </div>
+                            <button type="button" class="days_advanced">expanded</button>
+                        </div>
+                    </div>
+				</div>
+
+                <div id="today" class="row" hidden>
+                    <table id="main-table">
+                        <tr>
+                            <th>Time, h</th>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <th>Weather</th>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <th>Temperature, &deg;C</th>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <th>Pressure, hPa</th>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <th>Humidity, %</th>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <th>Wind speed, m/s</th>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </table>
+                </div>
+			</div>
+		</main>
+
+		<footer id="footer" class="row justify-content-center align-items-center">
+            <div class="raw">
+                <div class="col">
+                    <h3 class="autor">Created by Nazar Kosiv</h3>
+                    <div class="social">
+                        <a href="https://www.facebook.com/nazar.kosiv.3" class="fb">
+                            <span class="fa-stack fa-2x">
+                                <i class="far fa-circle fa-stack-2x fa-xs"></i>
+                                <i class="fab fa-facebook-f fa-stack-1x"></i>
+                            </span>
+                        </a>
+
+                        <a href="https://vk.com/id129016339" class="vk">
+                            <span class="fa-stack fa-2x">
+                                <i class="far fa-circle fa-stack-2x fa-xs"></i>
+                                <i class="fab fa-vk fa-stack-1x"></i>
+                            </span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+	</div>
+
+	
+	<script src="js/main.js"></script>
+	<script src="libs/bootstrap-4.0.0-dist/js/bootstrap.min.js"></script>
+	<script src="libs/bootstrap-4.0.0-dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

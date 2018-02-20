@@ -1,0 +1,303 @@
+html {
+  font-size: 14px;
+}
+
+body {
+  font-size: 14px;
+}
+
+#wrapper {
+  min-height: 100vh;
+  min-width: 520px;
+}
+
+#header {
+  background-color: #F2994A;
+  height: 100px;
+  margin-bottom: 55px;
+}
+
+#header .logo {
+  display: flex;
+  margin-left: 1%;
+}
+
+#header .logo a {
+  font-weight: bold;
+  font-size: 30px;
+  color: #fff;
+  text-decoration: none;
+  padding: 0;
+}
+
+#header .searchingplace {
+  box-sizing: border-box;
+  margin-right: 1%;
+}
+
+#header .searchingplace form {
+  position: relative;
+  width: 300px;
+  margin: 0 auto;
+}
+
+#header .searchingplace form #cityname {
+  width: 100%;
+  height: 42px;
+  padding-left: 10px;
+  border: 2px solid #7BA7AB;
+  border-radius: 5px;
+  outline: none;
+  background: #fff;
+  color: #000;
+}
+
+#header .searchingplace form #submitWeather {
+  position: absolute;
+  top: 0;
+  right: 0px;
+  font-weight: bold;
+  color: #fff;
+  width: 52px;
+  height: 42px;
+  border: none;
+  background: #7BA7AB;
+  border-radius: 0 5px 5px 0;
+  cursor: pointer;
+}
+
+#header .searchingplace form #submitWeather:focus {
+  outline: none;
+}
+
+.flex-grow {
+  flex: 1;
+}
+
+#main #content {
+  border: 2px solid #F2994A;
+  border-top-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  min-height: 480px;
+  position: relative;
+  text-align: center;
+}
+
+#main #content .todaysbtn {
+  background-color: #fff;
+  width: 80px;
+  height: 40px;
+  position: absolute;
+  color: #F2994A;
+  font-weight: bold;
+  font-size: 18px;
+  left: -2px;
+  top: -40px;
+  border: 2px solid #F2994A;
+  cursor: pointer;
+  border-top-left-radius: 5px;
+  transition: 0.25s;
+}
+
+#main #content .todaysbtn:hover {
+  color: #fff;
+  background-color: #F2994A;
+  background-image: none;
+}
+
+#main #content .todaysbtn:focus {
+  outline: none;
+}
+
+#main #content .fivedaysbtn {
+  background-color: #fff;
+  border: 2px solid #F2994A;
+  width: 80px;
+  height: 40px;
+  position: absolute;
+  color: #F2994A;
+  font-weight: bold;
+  font-size: 18px;
+  left: 76px;
+  top: -40px;
+  cursor: pointer;
+  border-top-right-radius: 5px;
+  transition: 0.25s;
+}
+
+#main #content .fivedaysbtn:hover {
+  color: #fff;
+  background-color: #F2994A;
+  background-image: none;
+}
+
+#main #content .fivedaysbtn:focus {
+  outline: none;
+}
+
+#main #content .clicked {
+  background-image: none;
+  background-color: #F2994A;
+  color: #fff;
+}
+
+#main #content #fivedays {
+  padding: 15px;
+}
+
+#main #content #fivedays #day1, #main #content #fivedays #day2, #main #content #fivedays #day3, #main #content #fivedays #day4, #main #content #fivedays #day5 {
+  height: 450px;
+  padding: 0;
+}
+
+#main #content #fivedays #day1 .days, #main #content #fivedays #day2 .days, #main #content #fivedays #day3 .days, #main #content #fivedays #day4 .days, #main #content #fivedays #day5 .days {
+  width: calc(100% - 10px);
+  height: calc(100% - 10px);
+  border: 2px solid #F2994A;
+  border-radius: 5px;
+  margin: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+
+#main #content #fivedays #day1 .days .days-wrapper, #main #content #fivedays #day2 .days .days-wrapper, #main #content #fivedays #day3 .days .days-wrapper, #main #content #fivedays #day4 .days .days-wrapper, #main #content #fivedays #day5 .days .days-wrapper {
+  border: 2px solid #F2994A;
+  border-radius: 5px;
+  width: 80%;
+}
+
+#main #content #fivedays #day1 .days .clouds-wrapper, #main #content #fivedays #day2 .days .clouds-wrapper, #main #content #fivedays #day3 .days .clouds-wrapper, #main #content #fivedays #day4 .days .clouds-wrapper, #main #content #fivedays #day5 .days .clouds-wrapper {
+  border: 2px solid #F2994A;
+  border-radius: 5px;
+  width: 80%;
+}
+
+#main #content #fivedays #day1 .days .temperatures-wrapper, #main #content #fivedays #day2 .days .temperatures-wrapper, #main #content #fivedays #day3 .days .temperatures-wrapper, #main #content #fivedays #day4 .days .temperatures-wrapper, #main #content #fivedays #day5 .days .temperatures-wrapper {
+  border: 2px solid #F2994A;
+  border-radius: 5px;
+  width: 80%;
+}
+
+#main #content #fivedays #day1 .days .pressures-wrapper, #main #content #fivedays #day2 .days .pressures-wrapper, #main #content #fivedays #day3 .days .pressures-wrapper, #main #content #fivedays #day4 .days .pressures-wrapper, #main #content #fivedays #day5 .days .pressures-wrapper {
+  border: 2px solid #F2994A;
+  border-radius: 5px;
+  width: 80%;
+}
+
+#main #content #fivedays #day1 .days .humiditys-wrapper, #main #content #fivedays #day2 .days .humiditys-wrapper, #main #content #fivedays #day3 .days .humiditys-wrapper, #main #content #fivedays #day4 .days .humiditys-wrapper, #main #content #fivedays #day5 .days .humiditys-wrapper {
+  border: 2px solid #F2994A;
+  border-radius: 5px;
+  width: 80%;
+}
+
+#main #content #fivedays #day1 .days .winds-wrapper, #main #content #fivedays #day2 .days .winds-wrapper, #main #content #fivedays #day3 .days .winds-wrapper, #main #content #fivedays #day4 .days .winds-wrapper, #main #content #fivedays #day5 .days .winds-wrapper {
+  border: 2px solid #F2994A;
+  border-radius: 5px;
+  width: 80%;
+}
+
+#main #content #fivedays #day1 .days_advanced, #main #content #fivedays #day2 .days_advanced, #main #content #fivedays #day3 .days_advanced, #main #content #fivedays #day4 .days_advanced, #main #content #fivedays #day5 .days_advanced {
+  align-self: center;
+  width: 100px;
+  height: 30px;
+  border: 2px solid #F2994A;
+  border-radius: 5px;
+  font-size: 1.2rem;
+  background-color: #ffffff;
+  color: #F2994A;
+  transition: all 0.2s;
+  cursor: pointer;
+  font-weight: normal;
+}
+
+#main #content #fivedays #day1 .days_advanced:hover, #main #content #fivedays #day2 .days_advanced:hover, #main #content #fivedays #day3 .days_advanced:hover, #main #content #fivedays #day4 .days_advanced:hover, #main #content #fivedays #day5 .days_advanced:hover {
+  color: #fff;
+  background-color: #F2994A;
+}
+
+#main #content #today {
+  width: 80%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 440px;
+}
+
+#main #content #today #main-table {
+  width: 100%;
+  font-size: 1.2rem;
+}
+
+#main #content #today #main-table th, #main #content #today #main-table td {
+  border: 1px solid #F2994A;
+  border-radius: 5px;
+}
+
+#footer {
+  margin-top: 15px;
+  min-height: 150px;
+  background-color: #3E474F;
+  opacity: 0.8;
+}
+
+#footer .autor {
+  color: #fff;
+}
+
+#footer .social {
+  display: flex;
+  justify-content: center;
+}
+
+#footer .social .fb {
+  padding: 0;
+  margin-right: 2%;
+  border-radius: 50%;
+  box-sizing: border-box;
+  transition: 0.25s;
+}
+
+#footer .social .fb:hover {
+  background-color: #fff;
+}
+
+#footer .social .fb .fa-circle {
+  color: #fff;
+}
+
+#footer .social .fb .fa-facebook-f {
+  color: #fff;
+  transition: 0.25s;
+}
+
+#footer .social .fb .fa-facebook-f:hover {
+  color: #4267B2;
+}
+
+#footer .social .vk {
+  padding: 0;
+  margin-left: 2%;
+  border-radius: 50%;
+  transition: 0.25s;
+}
+
+#footer .social .vk:hover {
+  background-color: #fff;
+}
+
+#footer .social .vk .fa-circle {
+  color: #fff;
+}
+
+#footer .social .vk .fa-vk {
+  color: #fff;
+  transition: 0.25s;
+}
+
+#footer .social .vk .fa-vk:hover {
+  color: #5579A0;
+}
