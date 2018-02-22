@@ -3,8 +3,10 @@
 //The action which happens when "today's" button is clicked
 
 var todaysVar = document.querySelector('.todaysbtn');
+var dataObj = void 0;
 
 todaysVar.onclick = function () {
+  if (!dataObj) return;
   var fiveDaysButton = document.querySelector('.fivedaysbtn');
   var fiveDays = document.querySelector('#content #fivedays');
   var today = document.querySelector('#today');
@@ -16,6 +18,8 @@ todaysVar.onclick = function () {
     this.classList.add('clicked');
   }
 
+  document.querySelector(".current-day").hidden = false;
+
   today.removeAttribute("hidden");
   fiveDays.setAttribute("hidden", "true");
 };
@@ -25,7 +29,7 @@ todaysVar.onclick = function () {
 var fiveDaysVar = document.querySelector('.fivedaysbtn');
 
 fiveDaysVar.onclick = function () {
-
+  if (!dataObj) return;
   var todaysButton = document.querySelector('.todaysbtn');
   var fiveDays = document.querySelector('#content #fivedays');
   var today = document.querySelector('#today');
@@ -37,6 +41,8 @@ fiveDaysVar.onclick = function () {
   if (!this.classList.contains('clicked')) {
     this.classList.add('clicked');
   }
+
+  document.querySelector(".current-day").hidden = true;
 
   fiveDays.removeAttribute("hidden");
   today.setAttribute("hidden", "true");
@@ -52,7 +58,7 @@ function createObjectFromJSON(url) {
   xhr.onload = function () {
     if (this.status == 200) {
       var obj = this.responseText;
-      var data = JSON.parse(obj);
+      dataObj = JSON.parse(obj);
       document.getElementById("today").removeAttribute("hidden");
       if (!document.querySelector('.todaysbtn').classList.contains("clicked")) {
         document.querySelector('.todaysbtn').classList.add("clicked");
@@ -60,8 +66,8 @@ function createObjectFromJSON(url) {
       if (document.querySelector('.fivedaysbtn').classList.contains("clicked")) {
         document.querySelector('.todaysbtn').classList.remove("clicked");
       }
-      fillingTable(data);
-      fillFields(data);
+      fillingTable(dataObj);
+      fillFields(dataObj);
       document.getElementById("cityname").value = "";
     }
   };
@@ -76,6 +82,11 @@ function createObjectFromJSON(url) {
 //Fill out all the fields with the values and units
 
 function fillFields(obj) {
+  //showing all the blocks in five days wrapper
+  for (var i = 1; i < 6; i++) {
+    document.getElementById('day' + i).hidden = false;
+  }
+
   //Filling out Day 1
   document.querySelector("#day1 .date").innerHTML = formatDate(obj.list[0].dt);
   document.querySelector("#day1 .w-icon").setAttribute("src", 'https://openweathermap.org/img/w/' + obj.list[0].weather[0].icon + '.png');
@@ -124,8 +135,11 @@ function fillFields(obj) {
 
 //Filling "today's" table
 function fillingTable(obj) {
+  //Showing hidden table
+  document.getElementById("main-table").hidden = false;
   //Filling city and country fields
-  document.querySelector(".city-country").innerHTML = 'Current weather for ' + obj.city.name + ', ' + obj.city.country;
+  document.querySelector(".city-country").innerHTML = 'Weather forecast for ' + obj.city.name + ', ' + obj.city.country;
+  document.querySelector(".current-day").innerHTML = 'on ' + getNormalDate(obj.list[0].dt);
 
   //Getting "main table" in variable
   var myTable = document.getElementById("main-table");
@@ -162,10 +176,13 @@ function fillingTable(obj) {
 }
 
 //When name of city is sent
-var submitButton = document.getElementById("submitWeather");
+var searchForm = document.getElementById("searchform");
 
-submitButton.onclick = function () {
+searchForm.onclick = function (e) {
+  var target = e.target;
+  if (target.tagName != "INPUT") return;
   var cityName = document.getElementById("cityname").value;
+  if (cityName == '') return;
   var APPID = "24b392a2ec286e7af099fee1f324b904";
   var createURL = 'https://api.openweathermap.org/data/2.5/forecast?q=' + cityName + '&units=metric&APPID=' + APPID;
   //involve AJAX function
@@ -191,13 +208,35 @@ function getHoursFromDate(date) {
   var d = new Date(date * 1000);
 
   var hh = d.getHours();
-  if (hh < 10) hh = '0' + hh;
+  if (hh < 10) hh = "0" + hh;
 
   return hh + ':00';
 }
 
+function getNormalDate(date) {
+
+  var d = new Date(date * 1000);
+
+  var dd = d.getDate();
+  if (dd < 10) dd = "0" + dd;
+
+  return getMonth(d) + ' ' + dd + ', ' + getFullWeekDay(d);
+}
+
 function getWeekDay(date) {
-  var days = ["Sun", "Mon", "Thu", "Wed", "Thu", "Fri", "Sat"];
+  var days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
+  return days[date.getDay()];
+}
+
+function getMonth(date) {
+  var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+  return months[date.getMonth()];
+}
+
+function getFullWeekDay(date) {
+  var days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
   return days[date.getDay()];
 }
