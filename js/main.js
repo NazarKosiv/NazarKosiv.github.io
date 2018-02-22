@@ -3,7 +3,7 @@
 //The action which happens when "today's" button is clicked
 
 var todaysVar = document.querySelector('.todaysbtn');
-var dataObj = void 0;
+var dataObj = null;
 
 todaysVar.onclick = function () {
   if (!dataObj) return;
