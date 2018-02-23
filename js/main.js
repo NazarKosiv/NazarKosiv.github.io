@@ -1,15 +1,16 @@
 'use strict';
 
-//The action which happens when "today's" button is clicked
+//The variables such as API key and API data
 
-var todaysVar = document.querySelector('.todaysbtn');
+var APPID = "24b392a2ec286e7af099fee1f324b904";
 var dataObj = null;
+
+//The action which happens when "today's" button is clicked
+var todaysVar = document.querySelector('.todaysbtn');
 
 todaysVar.onclick = function () {
   if (!dataObj) return;
   var fiveDaysButton = document.querySelector('.fivedaysbtn');
-  var fiveDays = document.querySelector('#content #fivedays');
-  var today = document.querySelector('#today');
 
   if (fiveDaysButton.classList.contains('clicked')) {
     fiveDaysButton.classList.remove('clicked');
@@ -179,14 +180,13 @@ function fillingTable(obj) {
 
 //When name of city is sent
 var searchForm = document.getElementById("searchform");
+var cityField = document.getElementById("cityname");
 
 searchForm.onclick = function (e) {
   var target = e.target;
-  if (target.tagName != "INPUT") return;
-  var cityName = document.getElementById("cityname").value;
-  if (cityName == '') return;
-  var APPID = "24b392a2ec286e7af099fee1f324b904";
-  var createURL = 'https://api.openweathermap.org/data/2.5/forecast?q=' + cityName + '&units=metric&APPID=' + APPID;
+  if (!target.closest("BUTTON")) return;
+  if (cityField.value == "") return;
+  var createURL = 'https://api.openweathermap.org/data/2.5/forecast?q=' + cityField.value + '&units=metric&APPID=' + APPID;
   //involve AJAX function
   createObjectFromJSON(createURL);
 };
