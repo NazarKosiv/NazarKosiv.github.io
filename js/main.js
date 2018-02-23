@@ -18,10 +18,11 @@ todaysVar.onclick = function () {
     this.classList.add('clicked');
   }
 
+  document.getElementById("main-table").hidden = false;
   document.querySelector(".current-day").hidden = false;
 
-  today.removeAttribute("hidden");
-  fiveDays.setAttribute("hidden", "true");
+  document.getElementById("today").hidden = false;
+  document.getElementById("fivedays").hidden = true;
 };
 
 //The action which happens when "fiveday's" button is clicked
@@ -31,8 +32,6 @@ var fiveDaysVar = document.querySelector('.fivedaysbtn');
 fiveDaysVar.onclick = function () {
   if (!dataObj) return;
   var todaysButton = document.querySelector('.todaysbtn');
-  var fiveDays = document.querySelector('#content #fivedays');
-  var today = document.querySelector('#today');
 
   if (todaysButton.classList.contains('clicked')) {
     todaysButton.classList.remove('clicked');
@@ -42,10 +41,11 @@ fiveDaysVar.onclick = function () {
     this.classList.add('clicked');
   }
 
-  document.querySelector(".current-day").hidden = true;
+  document.getElementById("main-table").hidden = true;
+  document.getElementById("today").hidden = true;
 
-  fiveDays.removeAttribute("hidden");
-  today.setAttribute("hidden", "true");
+  document.querySelector(".current-day").hidden = true;
+  document.getElementById("fivedays").hidden = false;
 };
 
 //AJAX
@@ -59,7 +59,6 @@ function createObjectFromJSON(url) {
     if (this.status == 200) {
       var obj = this.responseText;
       dataObj = JSON.parse(obj);
-      document.getElementById("today").removeAttribute("hidden");
       if (!document.querySelector('.todaysbtn').classList.contains("clicked")) {
         document.querySelector('.todaysbtn').classList.add("clicked");
       }
@@ -136,7 +135,10 @@ function fillFields(obj) {
 //Filling "today's" table
 function fillingTable(obj) {
   //Showing hidden table
-  document.getElementById("main-table").hidden = false;
+  if (!document.querySelector('.fivedaysbtn').classList.contains("clicked")) {
+    document.getElementById("main-table").hidden = false;
+    document.getElementById("today").hidden = false;
+  }
   //Filling city and country fields
   document.querySelector(".city-country").innerHTML = 'Weather forecast for ' + obj.city.name + ', ' + obj.city.country;
   document.querySelector(".current-day").innerHTML = 'on ' + getNormalDate(obj.list[0].dt);
