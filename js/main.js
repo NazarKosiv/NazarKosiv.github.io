@@ -181,14 +181,22 @@ function fillingTable(obj) {
 //When name of city is sent
 var searchForm = document.getElementById("searchform");
 var cityField = document.getElementById("cityname");
+var submitBtn = document.getElementById("submitWeather");
 
-searchForm.onclick = function (e) {
-  var target = e.target;
-  if (!target.closest("BUTTON")) return;
-  if (cityField.value == "") return;
+submitBtn.onclick = function () {
+  if (cityField.value == "") return false;
   var createURL = 'https://api.openweathermap.org/data/2.5/forecast?q=' + cityField.value + '&units=metric&APPID=' + APPID;
   //involve AJAX function
   createObjectFromJSON(createURL);
+  return false;
+};
+
+searchForm.onsubmit = function () {
+  if (cityField.value == "") return false;
+  var createURL = 'https://api.openweathermap.org/data/2.5/forecast?q=' + cityField.value + '&units=metric&APPID=' + APPID;
+  //involve AJAX function
+  createObjectFromJSON(createURL);
+  return false;
 };
 
 //Working with dates
