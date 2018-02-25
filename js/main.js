@@ -118,39 +118,80 @@ function fillFields(obj) {
   document.querySelector("#day1 .wind").innerHTML = obj.list[0].wind.speed.toFixed(0) + ' m/s';
 
   //Filling out all the parameters of each day after today
-  //Date
-  for (var _i = 0; _i < myDate.length - 1; _i++) {
-    document.querySelector('#day' + (_i + 2) + ' .date').innerHTML = formatDate(obj.list[myDate[_i] + 3].dt);
-  }
+  //Usually array myDate has 5 keys, but there's an exception at the end of each day it has just only 4 keys
+  //and that is gonna make problems if i don't put that audit here
+  if (myDate.length === 5) {
+    //Date
+    for (var _i = 0; _i < myDate.length - 1; _i++) {
+      document.querySelector('#day' + (_i + 2) + ' .date').innerHTML = formatDate(obj.list[myDate[_i] + 3].dt);
+    }
 
-  //Icon
-  for (var _i2 = 0; _i2 < myDate.length - 1; _i2++) {
-    document.querySelector('#day' + (_i2 + 2) + ' .w-icon').setAttribute("src", 'https://openweathermap.org/img/w/' + obj.list[myDate[_i2] + 3].weather[0].icon + '.png');
-  }
+    //Icon
+    for (var _i2 = 0; _i2 < myDate.length - 1; _i2++) {
+      document.querySelector('#day' + (_i2 + 2) + ' .w-icon').setAttribute("src", 'https://openweathermap.org/img/w/' + obj.list[myDate[_i2] + 3].weather[0].icon + '.png');
+    }
 
-  //Description(Clouds, Snow, Clear so on)
-  for (var _i3 = 0; _i3 < myDate.length - 1; _i3++) {
-    document.querySelector('#day' + (_i3 + 2) + ' .clouds').innerHTML = obj.list[myDate[_i3] + 3].weather[0].main;
-  }
+    //Description(Clouds, Snow, Clear so on)
+    for (var _i3 = 0; _i3 < myDate.length - 1; _i3++) {
+      document.querySelector('#day' + (_i3 + 2) + ' .clouds').innerHTML = obj.list[myDate[_i3] + 3].weather[0].main;
+    }
 
-  //Temperature
-  for (var _i4 = 0; _i4 < myDate.length - 1; _i4++) {
-    document.querySelector('#day' + (_i4 + 2) + ' .temperature').innerHTML = obj.list[myDate[_i4] + 3].main.temp.toFixed(0) + '&deg;C';
-  }
+    //Temperature
+    for (var _i4 = 0; _i4 < myDate.length - 1; _i4++) {
+      document.querySelector('#day' + (_i4 + 2) + ' .temperature').innerHTML = obj.list[myDate[_i4] + 3].main.temp.toFixed(0) + '&deg;C';
+    }
 
-  //Pressure
-  for (var _i5 = 0; _i5 < myDate.length - 1; _i5++) {
-    document.querySelector('#day' + (_i5 + 2) + ' .pressure').innerHTML = obj.list[myDate[_i5] + 3].main.pressure.toFixed(0) + ' hPa';
-  }
+    //Pressure
+    for (var _i5 = 0; _i5 < myDate.length - 1; _i5++) {
+      document.querySelector('#day' + (_i5 + 2) + ' .pressure').innerHTML = obj.list[myDate[_i5] + 3].main.pressure.toFixed(0) + ' hPa';
+    }
 
-  //Humidity
-  for (var _i6 = 0; _i6 < myDate.length - 1; _i6++) {
-    document.querySelector('#day' + (_i6 + 2) + ' .humidity').innerHTML = obj.list[myDate[_i6] + 3].main.humidity + '%';
-  }
+    //Humidity
+    for (var _i6 = 0; _i6 < myDate.length - 1; _i6++) {
+      document.querySelector('#day' + (_i6 + 2) + ' .humidity').innerHTML = obj.list[myDate[_i6] + 3].main.humidity + '%';
+    }
 
-  //Wind speed
-  for (var _i7 = 0; _i7 < myDate.length - 1; _i7++) {
-    document.querySelector('#day' + (_i7 + 2) + ' .wind').innerHTML = obj.list[myDate[_i7] + 3].wind.speed.toFixed(0) + ' m/s';
+    //Wind speed
+    for (var _i7 = 0; _i7 < myDate.length - 1; _i7++) {
+      document.querySelector('#day' + (_i7 + 2) + ' .wind').innerHTML = obj.list[myDate[_i7] + 3].wind.speed.toFixed(0) + ' m/s';
+    }
+  }
+  //With that everything is gonna work well
+  if (myDate.length === 4) {
+    //Date
+    for (var _i8 = 0; _i8 < myDate.length; _i8++) {
+      document.querySelector('#day' + (_i8 + 2) + ' .date').innerHTML = formatDate(obj.list[myDate[_i8] + 3].dt);
+    }
+
+    //Icon
+    for (var _i9 = 0; _i9 < myDate.length; _i9++) {
+      document.querySelector('#day' + (_i9 + 2) + ' .w-icon').setAttribute("src", 'https://openweathermap.org/img/w/' + obj.list[myDate[_i9] + 3].weather[0].icon + '.png');
+    }
+
+    //Description(Clouds, Snow, Clear so on)
+    for (var _i10 = 0; _i10 < myDate.length; _i10++) {
+      document.querySelector('#day' + (_i10 + 2) + ' .clouds').innerHTML = obj.list[myDate[_i10] + 3].weather[0].main;
+    }
+
+    //Temperature
+    for (var _i11 = 0; _i11 < myDate.length; _i11++) {
+      document.querySelector('#day' + (_i11 + 2) + ' .temperature').innerHTML = obj.list[myDate[_i11] + 3].main.temp.toFixed(0) + '&deg;C';
+    }
+
+    //Pressure
+    for (var _i12 = 0; _i12 < myDate.length; _i12++) {
+      document.querySelector('#day' + (_i12 + 2) + ' .pressure').innerHTML = obj.list[myDate[_i12] + 3].main.pressure.toFixed(0) + ' hPa';
+    }
+
+    //Humidity
+    for (var _i13 = 0; _i13 < myDate.length; _i13++) {
+      document.querySelector('#day' + (_i13 + 2) + ' .humidity').innerHTML = obj.list[myDate[_i13] + 3].main.humidity + '%';
+    }
+
+    //Wind speed
+    for (var _i14 = 0; _i14 < myDate.length; _i14++) {
+      document.querySelector('#day' + (_i14 + 2) + ' .wind').innerHTML = obj.list[myDate[_i14] + 3].wind.speed.toFixed(0) + ' m/s';
+    }
   }
 }
 
@@ -174,28 +215,28 @@ function fillingTable(obj) {
   }
 
   //weather every 3 hours
-  for (var _i8 = 0; _i8 < 8; _i8++) {
-    myTable.rows[1].cells[_i8 + 1].innerHTML = '<img src="https://openweathermap.org/img/w/' + obj.list[_i8].weather[0].icon + '.png" alt="type"><br><span>' + obj.list[_i8].weather[0].main + '</span>';
+  for (var _i15 = 0; _i15 < 8; _i15++) {
+    myTable.rows[1].cells[_i15 + 1].innerHTML = '<img src="https://openweathermap.org/img/w/' + obj.list[_i15].weather[0].icon + '.png" alt="type"><br><span>' + obj.list[_i15].weather[0].main + '</span>';
   }
 
   //Temperature every 3 hours
-  for (var _i9 = 0; _i9 < 8; _i9++) {
-    myTable.rows[2].cells[_i9 + 1].innerHTML = obj.list[_i9].main.temp.toFixed(0);
+  for (var _i16 = 0; _i16 < 8; _i16++) {
+    myTable.rows[2].cells[_i16 + 1].innerHTML = obj.list[_i16].main.temp.toFixed(0);
   }
 
   //Pressure every 3 hours
-  for (var _i10 = 0; _i10 < 8; _i10++) {
-    myTable.rows[3].cells[_i10 + 1].innerHTML = obj.list[_i10].main.pressure.toFixed(0);
+  for (var _i17 = 0; _i17 < 8; _i17++) {
+    myTable.rows[3].cells[_i17 + 1].innerHTML = obj.list[_i17].main.pressure.toFixed(0);
   }
 
   //Humidity every 3 hours
-  for (var _i11 = 0; _i11 < 8; _i11++) {
-    myTable.rows[4].cells[_i11 + 1].innerHTML = obj.list[_i11].main.humidity;
+  for (var _i18 = 0; _i18 < 8; _i18++) {
+    myTable.rows[4].cells[_i18 + 1].innerHTML = obj.list[_i18].main.humidity;
   }
 
   //Wind speed every 3 hours
-  for (var _i12 = 0; _i12 < 8; _i12++) {
-    myTable.rows[5].cells[_i12 + 1].innerHTML = obj.list[_i12].wind.speed.toFixed(0);
+  for (var _i19 = 0; _i19 < 8; _i19++) {
+    myTable.rows[5].cells[_i19 + 1].innerHTML = obj.list[_i19].wind.speed.toFixed(0);
   }
 }
 
