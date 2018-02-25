@@ -9,7 +9,7 @@ var dataObj = null;
 var todaysVar = document.querySelector('.todaysbtn');
 
 todaysVar.onclick = function () {
-  if (!dataObj) return;
+  if (!dataObj) return false;
   var fiveDaysButton = document.querySelector('.fivedaysbtn');
 
   if (fiveDaysButton.classList.contains('clicked')) {
@@ -31,7 +31,7 @@ todaysVar.onclick = function () {
 var fiveDaysVar = document.querySelector('.fivedaysbtn');
 
 fiveDaysVar.onclick = function () {
-  if (!dataObj) return;
+  if (!dataObj) return false;
   var todaysButton = document.querySelector('.todaysbtn');
 
   if (todaysButton.classList.contains('clicked')) {
@@ -49,10 +49,29 @@ fiveDaysVar.onclick = function () {
   document.getElementById("fivedays").hidden = false;
 };
 
+//When name of city is sent
+var searchForm = document.getElementById("searchform");
+var cityField = document.getElementById("cityname");
+var submitBtn = document.getElementById("submitWeather");
+
+submitBtn.onclick = function () {
+  if (cityField.value == "") return false;
+  var createURL = 'https://api.openweathermap.org/data/2.5/forecast?q=' + cityField.value + '&units=metric&APPID=' + APPID;
+  //involve AJAX function
+  createObjectFromJSON(createURL);
+  return false;
+};
+
+searchForm.onsubmit = function () {
+  if (cityField.value == "") return false;
+  var createURL = 'https://api.openweathermap.org/data/2.5/forecast?q=' + cityField.value + '&units=metric&APPID=' + APPID;
+  //involve AJAX function
+  createObjectFromJSON(createURL);
+  return false;
+};
+
 //AJAX
-
 function createObjectFromJSON(url) {
-
   var xhr = new XMLHttpRequest();
   xhr.open('GET', url, true);
 
@@ -79,9 +98,11 @@ function createObjectFromJSON(url) {
   xhr.send();
 }
 
-//Fill out all the fields with the values and units
-
+//Filling out all the fields of "5 Days" with the values and units
 function fillFields(obj) {
+  //Using my main function which gets beginning of each day and delcaring it to variable
+  var myDate = getSecondHourOfEachDay(obj);
+
   //showing all the blocks in five days wrapper
   for (var i = 1; i < 6; i++) {
     document.getElementById('day' + i).hidden = false;
@@ -96,44 +117,44 @@ function fillFields(obj) {
   document.querySelector("#day1 .humidity").innerHTML = obj.list[0].main.humidity + '%';
   document.querySelector("#day1 .wind").innerHTML = obj.list[0].wind.speed.toFixed(0) + ' m/s';
 
-  //Filling out day 2
-  document.querySelector("#day2 .date").innerHTML = formatDate(obj.list[8].dt);
-  document.querySelector("#day2 .w-icon").setAttribute("src", 'https://openweathermap.org/img/w/' + obj.list[8].weather[0].icon + '.png');
-  document.querySelector("#day2 .clouds").innerHTML = obj.list[8].weather[0].main;
-  document.querySelector("#day2 .temperature").innerHTML = obj.list[8].main.temp.toFixed(0) + '&deg;C';
-  document.querySelector("#day2 .pressure").innerHTML = obj.list[8].main.pressure.toFixed(0) + ' hPa';
-  document.querySelector("#day2 .humidity").innerHTML = obj.list[8].main.humidity + '%';
-  document.querySelector("#day2 .wind").innerHTML = obj.list[8].wind.speed.toFixed(0) + ' m/s';
+  //Filling out all the parameters of each day after today
+  //Date
+  for (var _i = 0; _i < myDate.length - 1; _i++) {
+    document.querySelector('#day' + (_i + 2) + ' .date').innerHTML = formatDate(obj.list[myDate[_i] + 3].dt);
+  }
 
-  //Filling out day 3
-  document.querySelector("#day3 .date").innerHTML = formatDate(obj.list[16].dt);
-  document.querySelector("#day3 .w-icon").setAttribute("src", 'https://openweathermap.org/img/w/' + obj.list[16].weather[0].icon + '.png');
-  document.querySelector("#day3 .clouds").innerHTML = obj.list[16].weather[0].main;
-  document.querySelector("#day3 .temperature").innerHTML = obj.list[16].main.temp.toFixed(0) + '&deg;C';
-  document.querySelector("#day3 .pressure").innerHTML = obj.list[16].main.pressure.toFixed(0) + ' hPa';
-  document.querySelector("#day3 .humidity").innerHTML = obj.list[16].main.humidity + '%';
-  document.querySelector("#day3 .wind").innerHTML = obj.list[16].wind.speed.toFixed(0) + ' m/s';
+  //Icon
+  for (var _i2 = 0; _i2 < myDate.length - 1; _i2++) {
+    document.querySelector('#day' + (_i2 + 2) + ' .w-icon').setAttribute("src", 'https://openweathermap.org/img/w/' + obj.list[myDate[_i2] + 3].weather[0].icon + '.png');
+  }
 
-  //Filling out day 4
-  document.querySelector("#day4 .date").innerHTML = formatDate(obj.list[24].dt);
-  document.querySelector("#day4 .w-icon").setAttribute("src", 'https://openweathermap.org/img/w/' + obj.list[24].weather[0].icon + '.png');
-  document.querySelector("#day4 .clouds").innerHTML = obj.list[24].weather[0].main;
-  document.querySelector("#day4 .temperature").innerHTML = obj.list[24].main.temp.toFixed(0) + '&deg;C';
-  document.querySelector("#day4 .pressure").innerHTML = obj.list[24].main.pressure.toFixed(0) + ' hPa';
-  document.querySelector("#day4 .humidity").innerHTML = obj.list[24].main.humidity + '%';
-  document.querySelector("#day4 .wind").innerHTML = obj.list[24].wind.speed.toFixed(0) + ' m/s';
+  //Description(Clouds, Snow, Clear so on)
+  for (var _i3 = 0; _i3 < myDate.length - 1; _i3++) {
+    document.querySelector('#day' + (_i3 + 2) + ' .clouds').innerHTML = obj.list[myDate[_i3] + 3].weather[0].main;
+  }
 
-  //Filling out day 5
-  document.querySelector("#day5 .date").innerHTML = formatDate(obj.list[32].dt);
-  document.querySelector("#day5 .w-icon").setAttribute("src", 'https://openweathermap.org/img/w/' + obj.list[32].weather[0].icon + '.png');
-  document.querySelector("#day5 .clouds").innerHTML = obj.list[32].weather[0].main;
-  document.querySelector("#day5 .temperature").innerHTML = obj.list[32].main.temp.toFixed(0) + '&deg;C';
-  document.querySelector("#day5 .pressure").innerHTML = obj.list[32].main.pressure.toFixed(0) + ' hPa';
-  document.querySelector("#day5 .humidity").innerHTML = obj.list[32].main.humidity + '%';
-  document.querySelector("#day5 .wind").innerHTML = obj.list[32].wind.speed.toFixed(0) + ' m/s';
+  //Temperature
+  for (var _i4 = 0; _i4 < myDate.length - 1; _i4++) {
+    document.querySelector('#day' + (_i4 + 2) + ' .temperature').innerHTML = obj.list[myDate[_i4] + 3].main.temp.toFixed(0) + '&deg;C';
+  }
+
+  //Pressure
+  for (var _i5 = 0; _i5 < myDate.length - 1; _i5++) {
+    document.querySelector('#day' + (_i5 + 2) + ' .pressure').innerHTML = obj.list[myDate[_i5] + 3].main.pressure.toFixed(0) + ' hPa';
+  }
+
+  //Humidity
+  for (var _i6 = 0; _i6 < myDate.length - 1; _i6++) {
+    document.querySelector('#day' + (_i6 + 2) + ' .humidity').innerHTML = obj.list[myDate[_i6] + 3].main.humidity + '%';
+  }
+
+  //Wind speed
+  for (var _i7 = 0; _i7 < myDate.length - 1; _i7++) {
+    document.querySelector('#day' + (_i7 + 2) + ' .wind').innerHTML = obj.list[myDate[_i7] + 3].wind.speed.toFixed(0) + ' m/s';
+  }
 }
 
-//Filling "today's" table
+//Filling out "today's" table
 function fillingTable(obj) {
   //Showing hidden table
   if (!document.querySelector('.fivedaysbtn').classList.contains("clicked")) {
@@ -153,55 +174,33 @@ function fillingTable(obj) {
   }
 
   //weather every 3 hours
-  for (var _i = 0; _i < 8; _i++) {
-    myTable.rows[1].cells[_i + 1].innerHTML = '<img src="https://openweathermap.org/img/w/' + obj.list[_i].weather[0].icon + '.png" alt="type"><br><span>' + obj.list[_i].weather[0].main + '</span>';
+  for (var _i8 = 0; _i8 < 8; _i8++) {
+    myTable.rows[1].cells[_i8 + 1].innerHTML = '<img src="https://openweathermap.org/img/w/' + obj.list[_i8].weather[0].icon + '.png" alt="type"><br><span>' + obj.list[_i8].weather[0].main + '</span>';
   }
 
   //Temperature every 3 hours
-  for (var _i2 = 0; _i2 < 8; _i2++) {
-    myTable.rows[2].cells[_i2 + 1].innerHTML = obj.list[_i2].main.temp.toFixed(0);
+  for (var _i9 = 0; _i9 < 8; _i9++) {
+    myTable.rows[2].cells[_i9 + 1].innerHTML = obj.list[_i9].main.temp.toFixed(0);
   }
 
   //Pressure every 3 hours
-  for (var _i3 = 0; _i3 < 8; _i3++) {
-    myTable.rows[3].cells[_i3 + 1].innerHTML = obj.list[_i3].main.pressure.toFixed(0);
+  for (var _i10 = 0; _i10 < 8; _i10++) {
+    myTable.rows[3].cells[_i10 + 1].innerHTML = obj.list[_i10].main.pressure.toFixed(0);
   }
 
   //Humidity every 3 hours
-  for (var _i4 = 0; _i4 < 8; _i4++) {
-    myTable.rows[4].cells[_i4 + 1].innerHTML = obj.list[_i4].main.humidity;
+  for (var _i11 = 0; _i11 < 8; _i11++) {
+    myTable.rows[4].cells[_i11 + 1].innerHTML = obj.list[_i11].main.humidity;
   }
 
   //Wind speed every 3 hours
-  for (var _i5 = 0; _i5 < 8; _i5++) {
-    myTable.rows[5].cells[_i5 + 1].innerHTML = obj.list[_i5].wind.speed.toFixed(0);
+  for (var _i12 = 0; _i12 < 8; _i12++) {
+    myTable.rows[5].cells[_i12 + 1].innerHTML = obj.list[_i12].wind.speed.toFixed(0);
   }
 }
 
-//When name of city is sent
-var searchForm = document.getElementById("searchform");
-var cityField = document.getElementById("cityname");
-var submitBtn = document.getElementById("submitWeather");
-
-submitBtn.onclick = function () {
-  if (cityField.value == "") return false;
-  var createURL = 'https://api.openweathermap.org/data/2.5/forecast?q=' + cityField.value + '&units=metric&APPID=' + APPID;
-  //involve AJAX function
-  createObjectFromJSON(createURL);
-  return false;
-};
-
-searchForm.onsubmit = function () {
-  if (cityField.value == "") return false;
-  var createURL = 'https://api.openweathermap.org/data/2.5/forecast?q=' + cityField.value + '&units=metric&APPID=' + APPID;
-  //involve AJAX function
-  createObjectFromJSON(createURL);
-  return false;
-};
-
-//Working with dates
+//Working with dates, functions helpers
 function formatDate(date) {
-
   var d = new Date(date * 1000);
 
   var dd = d.getDate();
@@ -214,7 +213,6 @@ function formatDate(date) {
 }
 
 function getHoursFromDate(date) {
-
   var d = new Date(date * 1000);
 
   var hh = d.getHours();
@@ -224,7 +222,6 @@ function getHoursFromDate(date) {
 }
 
 function getNormalDate(date) {
-
   var d = new Date(date * 1000);
 
   var dd = d.getDate();
@@ -249,4 +246,21 @@ function getFullWeekDay(date) {
   var days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
   return days[date.getDay()];
+}
+
+function getCurrentDay(date) {
+  var d = new Date(date * 1000);
+
+  return d.getDate();
+}
+
+function getSecondHourOfEachDay(obj) {
+  var hoursArray = [];
+
+  for (var i = 0; i < obj.list.length; i++) {
+    if (getHoursFromDate(obj.list[i].dt) === "02:00" && getCurrentDay(obj.list[i].dt) != getCurrentDay(obj.list[0].dt)) {
+      hoursArray.push(i);
+    }
+  }
+  return hoursArray;
 }
