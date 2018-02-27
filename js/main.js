@@ -5,6 +5,9 @@
 var APPID = "24b392a2ec286e7af099fee1f324b904";
 var dataObj = null;
 
+//Getting "main table" to variable
+var myTable = document.getElementById("main-table");
+
 //The action which happens when "today's" button is clicked
 var todaysVar = document.querySelector('.todaysbtn');
 
@@ -24,8 +27,9 @@ todaysVar.onclick = function () {
 
   document.getElementById("today").hidden = false;
   document.getElementById("fivedays").hidden = true;
+
   if (document.querySelector(".some-date").innerHTML != getNormalDate(dataObj.list[0].dt)) {
-    fillingTable(dataObj);
+    fillOutTable(dataObj, 0, 8, myTable);
   }
 };
 
@@ -56,7 +60,6 @@ fiveDaysVar.onclick = function () {
 document.getElementById("fivedays").onclick = function (e) {
   var target = e.target;
   if (target.tagName != "BUTTON" && !target.classList.contains("days_advanced")) return false;
-  var myTable = document.getElementById("main-table");
   var myDate = getSecondHourOfEachDay(dataObj);
   var from = null;
   var to = null;
@@ -77,6 +80,10 @@ document.getElementById("fivedays").onclick = function (e) {
 
     document.getElementById("today").hidden = false;
     document.getElementById("fivedays").hidden = true;
+
+    if (document.querySelector(".some-date").innerHTML != getNormalDate(dataObj.list[0].dt)) {
+      fillOutTable(dataObj, 0, 8, myTable);
+    }
     return false;
   }
   //if expanded button for second day is clicked
@@ -100,7 +107,7 @@ document.getElementById("fivedays").onclick = function (e) {
     to = myDate[4];
   }
   //Filling out main table with current values
-  fillOutExpended(dataObj, from, to, myTable);
+  fillOutTable(dataObj, from, to, myTable);
   //Show and hide necessary elements
   document.getElementById("main-table").hidden = false;
   document.querySelector(".current-day").hidden = false;
@@ -116,7 +123,7 @@ var submitBtn = document.getElementById("submitWeather");
 
 submitBtn.onclick = function () {
   if (cityField.value == "") return false;
-  var createURL = 'https://api.openweathermap.org/data/2.5/forecast?q=' + cityField.value + '&units=metric&APPID=' + APPID;
+  var createURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + cityField.value + "&units=metric&APPID=" + APPID;
   //involve AJAX function
   createObjectFromJSON(createURL);
   return false;
@@ -124,7 +131,7 @@ submitBtn.onclick = function () {
 
 searchForm.onsubmit = function () {
   if (cityField.value == "") return false;
-  var createURL = 'https://api.openweathermap.org/data/2.5/forecast?q=' + cityField.value + '&units=metric&APPID=' + APPID;
+  var createURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + cityField.value + "&units=metric&APPID=" + APPID;
   //involve AJAX function
   createObjectFromJSON(createURL);
   return false;
@@ -145,7 +152,7 @@ function createObjectFromJSON(url) {
       if (document.querySelector('.fivedaysbtn').classList.contains("clicked")) {
         document.querySelector('.todaysbtn').classList.remove("clicked");
       }
-      fillingTable(dataObj);
+      fillOutTable(dataObj, 0, 8, myTable, true);
       fillFields(dataObj);
       document.getElementById("cityname").value = "";
     }
@@ -165,106 +172,72 @@ function fillFields(obj) {
 
   //showing all the blocks in five days wrapper
   for (var i = 1; i < 6; i++) {
-    document.getElementById('day' + i).hidden = false;
+    document.getElementById("day" + i).hidden = false;
   }
 
   //Filling out Day 1
   document.querySelector("#day1 .date").innerHTML = formatDate(obj.list[0].dt);
-  document.querySelector("#day1 .w-icon").setAttribute("src", 'https://openweathermap.org/img/w/' + obj.list[0].weather[0].icon + '.png');
+  document.querySelector("#day1 .w-icon").setAttribute("src", "https://openweathermap.org/img/w/" + obj.list[0].weather[0].icon + ".png");
   document.querySelector("#day1 .clouds").innerHTML = obj.list[0].weather[0].main;
-  document.querySelector("#day1 .temperature").innerHTML = obj.list[0].main.temp.toFixed(0) + '&deg;C';
-  document.querySelector("#day1 .pressure").innerHTML = obj.list[0].main.pressure.toFixed(0) + ' hPa';
-  document.querySelector("#day1 .humidity").innerHTML = obj.list[0].main.humidity + '%';
-  document.querySelector("#day1 .wind").innerHTML = obj.list[0].wind.speed.toFixed(0) + ' m/s';
+  document.querySelector("#day1 .temperature").innerHTML = obj.list[0].main.temp.toFixed(0) + "&deg;C";
+  document.querySelector("#day1 .pressure").innerHTML = obj.list[0].main.pressure.toFixed(0) + " hPa";
+  document.querySelector("#day1 .humidity").innerHTML = obj.list[0].main.humidity + "%";
+  document.querySelector("#day1 .wind").innerHTML = obj.list[0].wind.speed.toFixed(0) + " m/s";
 
   //Filling out all the parameters of each day after today
   //Why "i < 4"? 'cause there's usually 5 keys in "myDate's" array except of the end of each day when there's 4
   //That is the reason for not using "myDate.length", we need only first 4 [0], [1], [2], [3]
   //Date
   for (var _i = 0; _i < 4; _i++) {
-    document.querySelector('#day' + (_i + 2) + ' .date').innerHTML = formatDate(obj.list[myDate[_i] + 3].dt);
+    document.querySelector("#day" + (_i + 2) + " .date").innerHTML = formatDate(obj.list[myDate[_i] + 3].dt);
   }
 
   //Icon
   for (var _i2 = 0; _i2 < 4; _i2++) {
-    document.querySelector('#day' + (_i2 + 2) + ' .w-icon').setAttribute("src", 'https://openweathermap.org/img/w/' + obj.list[myDate[_i2] + 3].weather[0].icon + '.png');
+    document.querySelector("#day" + (_i2 + 2) + " .w-icon").setAttribute("src", "https://openweathermap.org/img/w/" + obj.list[myDate[_i2] + 3].weather[0].icon + ".png");
   }
 
   //Description(Clouds, Snow, Clear so on)
   for (var _i3 = 0; _i3 < 4; _i3++) {
-    document.querySelector('#day' + (_i3 + 2) + ' .clouds').innerHTML = obj.list[myDate[_i3] + 3].weather[0].main;
+    document.querySelector("#day" + (_i3 + 2) + " .clouds").innerHTML = obj.list[myDate[_i3] + 3].weather[0].main;
   }
 
   //Temperature
   for (var _i4 = 0; _i4 < 4; _i4++) {
-    document.querySelector('#day' + (_i4 + 2) + ' .temperature').innerHTML = obj.list[myDate[_i4] + 3].main.temp.toFixed(0) + '&deg;C';
+    document.querySelector("#day" + (_i4 + 2) + " .temperature").innerHTML = obj.list[myDate[_i4] + 3].main.temp.toFixed(0) + "&deg;C";
   }
 
   //Pressure
   for (var _i5 = 0; _i5 < 4; _i5++) {
-    document.querySelector('#day' + (_i5 + 2) + ' .pressure').innerHTML = obj.list[myDate[_i5] + 3].main.pressure.toFixed(0) + ' hPa';
+    document.querySelector("#day" + (_i5 + 2) + " .pressure").innerHTML = obj.list[myDate[_i5] + 3].main.pressure.toFixed(0) + " hPa";
   }
 
   //Humidity
   for (var _i6 = 0; _i6 < 4; _i6++) {
-    document.querySelector('#day' + (_i6 + 2) + ' .humidity').innerHTML = obj.list[myDate[_i6] + 3].main.humidity + '%';
+    document.querySelector("#day" + (_i6 + 2) + " .humidity").innerHTML = obj.list[myDate[_i6] + 3].main.humidity + "%";
   }
 
   //Wind speed
   for (var _i7 = 0; _i7 < 4; _i7++) {
-    document.querySelector('#day' + (_i7 + 2) + ' .wind').innerHTML = obj.list[myDate[_i7] + 3].wind.speed.toFixed(0) + ' m/s';
+    document.querySelector("#day" + (_i7 + 2) + " .wind").innerHTML = obj.list[myDate[_i7] + 3].wind.speed.toFixed(0) + " m/s";
   }
 }
 
-//Filling out "today's" table
-function fillingTable(obj) {
+//Filling out table
+function fillOutTable(obj, f, t, table) {
+  var show = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : false;
+
   //Showing hidden table
-  if (!document.querySelector('.fivedaysbtn').classList.contains("clicked")) {
-    document.getElementById("main-table").hidden = false;
-    document.getElementById("today").hidden = false;
+  if (show) {
+    if (!document.querySelector('.fivedaysbtn').classList.contains("clicked")) {
+      document.getElementById("main-table").hidden = false;
+      document.getElementById("today").hidden = false;
+    }
+    //Country
+    document.querySelector(".city-country").innerHTML = "Weather forecast for " + obj.city.name + ", " + obj.city.country;
   }
-  //Filling city and country fields
-  document.querySelector(".city-country").innerHTML = 'Weather forecast for ' + obj.city.name + ', ' + obj.city.country;
-  document.querySelector(".current-day").innerHTML = 'on <span class="some-date">' + getNormalDate(obj.list[0].dt) + '</span>';
-
-  //Getting "main table" in variable
-  var myTable = document.getElementById("main-table");
-
-  //Filling out time's field
-  for (var i = 0; i < 8; i++) {
-    myTable.rows[0].cells[i + 1].innerHTML = getHoursFromDate(obj.list[i].dt);
-  }
-
-  //weather every 3 hours
-  for (var _i8 = 0; _i8 < 8; _i8++) {
-    myTable.rows[1].cells[_i8 + 1].innerHTML = '<img src="https://openweathermap.org/img/w/' + obj.list[_i8].weather[0].icon + '.png" alt="type"><br><span>' + obj.list[_i8].weather[0].main + '</span>';
-  }
-
-  //Temperature every 3 hours
-  for (var _i9 = 0; _i9 < 8; _i9++) {
-    myTable.rows[2].cells[_i9 + 1].innerHTML = obj.list[_i9].main.temp.toFixed(0);
-  }
-
-  //Pressure every 3 hours
-  for (var _i10 = 0; _i10 < 8; _i10++) {
-    myTable.rows[3].cells[_i10 + 1].innerHTML = obj.list[_i10].main.pressure.toFixed(0);
-  }
-
-  //Humidity every 3 hours
-  for (var _i11 = 0; _i11 < 8; _i11++) {
-    myTable.rows[4].cells[_i11 + 1].innerHTML = obj.list[_i11].main.humidity;
-  }
-
-  //Wind speed every 3 hours
-  for (var _i12 = 0; _i12 < 8; _i12++) {
-    myTable.rows[5].cells[_i12 + 1].innerHTML = obj.list[_i12].wind.speed.toFixed(0);
-  }
-}
-
-//Filling out table when expended button is clicked
-function fillOutExpended(obj, f, t, table) {
   //Right day
-  document.querySelector(".current-day").innerHTML = 'on <span class="some-date">' + getNormalDate(obj.list[f].dt) + '</span>';
+  document.querySelector(".current-day").innerHTML = "on <span class=\"some-date\">" + getNormalDate(obj.list[f].dt) + "</span>";
 
   //Filling out time's field
   for (var i = f, j = 1; i < t; i++, j++) {
@@ -272,28 +245,28 @@ function fillOutExpended(obj, f, t, table) {
   }
 
   //weather every 3 hours
-  for (var _i13 = f, _j = 1; _i13 < t; _i13++, _j++) {
-    table.rows[1].cells[_j].innerHTML = '<img src="https://openweathermap.org/img/w/' + obj.list[_i13].weather[0].icon + '.png" alt="type"><br><span>' + obj.list[_i13].weather[0].main + '</span>';
+  for (var _i8 = f, _j = 1; _i8 < t; _i8++, _j++) {
+    table.rows[1].cells[_j].innerHTML = "<img src=\"https://openweathermap.org/img/w/" + obj.list[_i8].weather[0].icon + ".png\" alt=\"type\"><br><span>" + obj.list[_i8].weather[0].main + "</span>";
   }
 
   //Temperature every 3 hours
-  for (var _i14 = f, _j2 = 1; _i14 < t; _i14++, _j2++) {
-    table.rows[2].cells[_j2].innerHTML = obj.list[_i14].main.temp.toFixed(0);
+  for (var _i9 = f, _j2 = 1; _i9 < t; _i9++, _j2++) {
+    table.rows[2].cells[_j2].innerHTML = obj.list[_i9].main.temp.toFixed(0);
   }
 
   //Pressure every 3 hours
-  for (var _i15 = f, _j3 = 1; _i15 < t; _i15++, _j3++) {
-    table.rows[3].cells[_j3].innerHTML = obj.list[_i15].main.pressure.toFixed(0);
+  for (var _i10 = f, _j3 = 1; _i10 < t; _i10++, _j3++) {
+    table.rows[3].cells[_j3].innerHTML = obj.list[_i10].main.pressure.toFixed(0);
   }
 
   //Humidity every 3 hours
-  for (var _i16 = f, _j4 = 1; _i16 < t; _i16++, _j4++) {
-    table.rows[4].cells[_j4].innerHTML = obj.list[_i16].main.humidity;
+  for (var _i11 = f, _j4 = 1; _i11 < t; _i11++, _j4++) {
+    table.rows[4].cells[_j4].innerHTML = obj.list[_i11].main.humidity;
   }
 
   //Wind speed every 3 hours
-  for (var _i17 = f, _j5 = 1; _i17 < t; _i17++, _j5++) {
-    table.rows[5].cells[_j5].innerHTML = obj.list[_i17].wind.speed.toFixed(0);
+  for (var _i12 = f, _j5 = 1; _i12 < t; _i12++, _j5++) {
+    table.rows[5].cells[_j5].innerHTML = obj.list[_i12].wind.speed.toFixed(0);
   }
 }
 
@@ -307,7 +280,7 @@ function formatDate(date) {
   var mm = d.getMonth() + 1;
   if (mm < 10) mm = "0" + mm;
 
-  return dd + '.' + mm + ' ' + getWeekDay(d);
+  return dd + "." + mm + " " + getWeekDay(d);
 }
 
 function getHoursFromDate(date) {
@@ -316,7 +289,7 @@ function getHoursFromDate(date) {
   var hh = d.getHours();
   if (hh < 10) hh = "0" + hh;
 
-  return hh + ':00';
+  return hh + ":00";
 }
 
 function getNormalDate(date) {
@@ -325,7 +298,7 @@ function getNormalDate(date) {
   var dd = d.getDate();
   if (dd < 10) dd = "0" + dd;
 
-  return getMonth(d) + ' ' + dd + ', ' + getFullWeekDay(d);
+  return getMonth(d) + " " + dd + ", " + getFullWeekDay(d);
 }
 
 function getWeekDay(date) {
