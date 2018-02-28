@@ -104,7 +104,11 @@ document.getElementById("fivedays").onclick = function (e) {
   //for fifth day
   if (target.getAttribute("data-tooltip") == 4) {
     from = myDate[3];
-    to = myDate[4];
+    if (myDate[4]) {
+      to = myDate[4];
+    } else {
+      to = 40;
+    }
   }
   //Filling out main table with current values
   fillOutTable(dataObj, from, to, myTable);
