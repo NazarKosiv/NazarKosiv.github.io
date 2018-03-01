@@ -129,7 +129,11 @@ submitBtn.onclick = function () {
   if (cityField.value == "") return false;
   var createURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + cityField.value + "&units=metric&APPID=" + APPID;
   //involve AJAX function
-  createObjectFromJSON(createURL);
+  createObjectFromJSON(createURL).then(function (response) {
+    return resolveXHR(response);
+  }).catch(function (error) {
+    return rejectXHR(error);
+  });
   return false;
 };
 
@@ -137,36 +141,55 @@ searchForm.onsubmit = function () {
   if (cityField.value == "") return false;
   var createURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + cityField.value + "&units=metric&APPID=" + APPID;
   //involve AJAX function
-  createObjectFromJSON(createURL);
+  createObjectFromJSON(createURL).then(function (response) {
+    return resolveXHR(response);
+  }).catch(function (error) {
+    return rejectXHR(error);
+  });
   return false;
 };
 
-//AJAX
+//There goes AJAX with Promise
 function createObjectFromJSON(url) {
-  var xhr = new XMLHttpRequest();
-  xhr.open('GET', url, true);
+  return new Promise(function (resolve, reject) {
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', url, true);
 
-  xhr.onload = function () {
-    if (this.status == 200) {
-      var obj = this.responseText;
-      dataObj = JSON.parse(obj);
-      if (!document.querySelector('.todaysbtn').classList.contains("clicked")) {
-        document.querySelector('.todaysbtn').classList.add("clicked");
+    xhr.onload = function () {
+      if (this.status == 200) {
+        resolve(this.responseText);
+      } else {
+        var error = new Error(this.statusText);
+        error.code = this.status;
+        reject(error + " " + error.code);
       }
-      if (document.querySelector('.fivedaysbtn').classList.contains("clicked")) {
-        document.querySelector('.todaysbtn').classList.remove("clicked");
-      }
-      fillOutTable(dataObj, 0, 8, myTable, true);
-      fillFields(dataObj);
-      document.getElementById("cityname").value = "";
-    }
-  };
+    };
 
-  xhr.onerror = function () {
-    console.log('Request Error...');
-  };
+    xhr.onerror = function () {
+      reject(new Error("Network error..."));
+    };
 
-  xhr.send();
+    xhr.send();
+  });
+}
+
+//onFulfilled
+function resolveXHR(data) {
+  dataObj = JSON.parse(data);
+  if (!document.querySelector('.todaysbtn').classList.contains("clicked")) {
+    document.querySelector('.todaysbtn').classList.add("clicked");
+  }
+  if (document.querySelector('.fivedaysbtn').classList.contains("clicked")) {
+    document.querySelector('.todaysbtn').classList.remove("clicked");
+  }
+  fillOutTable(dataObj, 0, 8, myTable, true);
+  fillFields(dataObj);
+  document.getElementById("cityname").value = "";
+}
+
+//onRejected
+function rejectXHR(data) {
+  alert(data);
 }
 
 //Filling out all the fields of "5 Days" with the values and units
